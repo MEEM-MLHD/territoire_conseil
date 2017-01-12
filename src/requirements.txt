@@ -1,0 +1,12 @@
+Django==1.10
+Pillow==3.3.1
+django-bootstrap3==7.0.1
+django-filter==0.14.0
+django-geojson==2.9.1
+django-leaflet==0.19.0
+psycopg2==2.6.2
+six==1.10.0
+wsgiref==0.1.2
+django-registration-redux==1.4
+unicodecsv==0.14.1
+django-autocomplete-light==3.2.0
