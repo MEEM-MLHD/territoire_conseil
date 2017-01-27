@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'bootstrap3',
+    'leaflet',
     'projects',
 ]
 
@@ -112,3 +114,11 @@ STATIC_ROOT = '/var/www/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/var/www/media'
+
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (47, 2.0),
+    'DEFAULT_ZOOM': 6,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+}

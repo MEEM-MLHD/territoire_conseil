@@ -11,13 +11,6 @@ class StakeHolderTypeInline(admin.TabularInline):
     verbose_name_plural = "Acteurs de l'ingénierie mobilisés"
 
 
-# class StructurePositionTypeInline(admin.TabularInline):
-#     model = StructurePositionType
-#     extra = 1
-#     verbose_name = "Positionnement de votre structure par rapport au porteur de projet"
-#     verbose_name_plural = "Positionnements de votre structure par rapport au porteur de projet"
-
-
 class ProjectAdmin(admin.ModelAdmin):
     inlines = (StakeHolderTypeInline, )
     fieldsets = (
@@ -53,4 +46,5 @@ admin.site.register(Skill)
 admin.site.register(Theme)
 admin.site.register(Trigger)
 admin.site.register(Schedule)
+admin.site.register(Structure)
 admin.site.register(Project, ProjectAdmin)
