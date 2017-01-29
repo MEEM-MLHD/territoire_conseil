@@ -1,11 +1,19 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from leaflet.forms.widgets import LeafletWidget
+from djangoformsetjs.utils import formset_media_js
 
 from .models import Project, Referent, StakeHolderType
 
 
 class ProjectForm(forms.ModelForm):
 
+    PROJECT_LEADER_TYPE_CHOICES = (
+        ('public', 'Public'),
+        ('private', u'Privé'),
+    )
+
+    project_leader_type = forms.CharField(label="", max_length=99, required=True, widget=forms.RadioSelect(choices=PROJECT_LEADER_TYPE_CHOICES))
     class Meta:
         model = Project
         exclude = ('referents', )
@@ -15,6 +23,7 @@ class ProjectForm(forms.ModelForm):
         		   'triggers': forms.CheckboxSelectMultiple,
         		   'mobilized_skills': forms.CheckboxSelectMultiple,
         		   'missing_skills': forms.CheckboxSelectMultiple,
+                   #'project_leader_type': forms.RadioSelect,
         			}
 
 

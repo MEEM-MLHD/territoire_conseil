@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load bootstrap3 %}
+{% load bootstrap3 formset_tags %}
 
 {% block content %}
 
@@ -12,46 +12,182 @@
     {% bootstrap_field form.project_leader_type %}
     {% bootstrap_field form.project_leader_name %}
     <h2>Périmètre du projet</h2>
-    {% bootstrap_field form.region %}
-    {% bootstrap_field form.department %}
-    {% bootstrap_field form.epci_name %}
-    {% bootstrap_field form.epci_siren %}
+
+    <ul class="nav nav-pills nav-justified" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#region" role="tab">Région</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#department" role="tab">Département</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#epci" role="tab">EPCI</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"  data-toggle="tab" href="#commune" role="tab">Commune</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"  data-toggle="tab" href="#autre" role="tab">Autre</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="region" role="tabpanel">
+      {% bootstrap_field form.region %}
+  </div>
+  <div class="tab-pane" id="department" role="tabpanel">
+      {% bootstrap_field form.department %}
+  </div>
+  <div class="tab-pane" id="epci" role="tabpanel">
+      {% bootstrap_field form.epci_name %}
+      {% bootstrap_field form.epci_siren %}
+  </div>
+  <div class="tab-pane" id="commune" role="tabpanel">
     {% bootstrap_field form.town_name %}
     {% bootstrap_field form.town_insee %}
-    {% bootstrap_field form.geom %}
-    <h2>Référents</h2>
-    {% bootstrap_formset referent_formset %}
-    <h2>Thématiques</h2>
-    {% bootstrap_field form.themes %}
-    {% bootstrap_field form.themes_others %}
-    <h2>Pilotage de la mission d'appui</h2>
-    {% bootstrap_field form.manager %}
-    {% bootstrap_field form.manager_other %}
-    <h2>Eléments déclencheur</h2>
-    {% bootstrap_field form.triggers %}
-    {% bootstrap_field form.triggers_others %}
-    <h2>Types d'interventions</h2>
-    {% bootstrap_field form.interventions %}
-    {% bootstrap_field form.interventions_others %}
-    <h2>Missions</h2>
-    {% bootstrap_field form.structure_challenges %}
-    <h2>Compétences de la structure</h2>
-    {% bootstrap_field form.mobilized_skills %}
-    {% bootstrap_field form.mobilized_skills_others %}
-    {% bootstrap_field form.missing_skills %}
-    {% bootstrap_field form.missing_skills_others %}
-    <h2>Acteurs de l'ingénierie mobilisés</h2>
-    {% bootstrap_formset stakeholdertype_formset %}
-    <h2>Calendrier</h2>
-    {% bootstrap_field form.schedule %}
-    <h2>Conditions de réussite, blocages et solutions</h2>
-    {% bootstrap_field form.obstables %}
+</div>
+<div class="tab-pane" id="autre" role="tabpanel">
+</div>
+</div>
+
+{% bootstrap_field form.geom %}
+<h2>Référents</h2>
+
+<div id="referent_formset" data-formset-prefix="{{ referent_formset.prefix }}">
+    {{ referent_formset.management_form }}
+    <div data-formset-body>
+        <!-- New forms will be inserted in here -->
+        {% for form in referent_formset %}
+        <div data-formset-form>
+            <div class="container">
+                <div class="row">
+                    {% bootstrap_field form.firstname %}
+                    {% bootstrap_field form.lastname %}
+                    {% bootstrap_field form.structure %}
+                    {% bootstrap_field form.service %}
+                    {% bootstrap_field form.function %}
+                    {% bootstrap_field form.mail %}
+                    {% bootstrap_field form.phone %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- The empty form template. By wrapping this in a <script> tag, the
+    __prefix__ placeholder can easily be replaced in both attributes and
+    any scripts -->
+    <script type="form-template" data-formset-empty-form>
+        {% escapescript %}
+        <div data-formset-form>
+            <div class="container">
+                <div class="row">
+                    {% bootstrap_field referent_formset.empty_form.firstname %}
+                    {% bootstrap_field referent_formset.empty_form.lastname %}
+                    {% bootstrap_field referent_formset.empty_form.structure %}
+                    {% bootstrap_field referent_formset.empty_form.service %}
+                    {% bootstrap_field referent_formset.empty_form.function %}
+                    {% bootstrap_field referent_formset.empty_form.mail %}
+                    {% bootstrap_field referent_formset.empty_form.phone %}
+                </div>
+            </div>
+        </div>
+        {% endescapescript %}
+    </script>
 
     {% buttons %}
-        <button type="submit" class="btn btn-primary">
-            {% bootstrap_icon "star" %} Submit
-        </button>
+    <input class="btn btn-primary" type="button" value="Ajouter un référent" data-formset-add>
     {% endbuttons %}
+
+    <script>jQuery(function($) {
+        $("#referent_formset").formset({
+            animateForms: true,
+            reorderMode: 'dom',
+        });
+    });</script>
+
+</div>
+
+
+
+
+<h2>Thématiques</h2>
+{% bootstrap_field form.themes %}
+{% bootstrap_field form.themes_others %}
+<h2>Pilotage de la mission d'appui</h2>
+{% bootstrap_field form.manager %}
+{% bootstrap_field form.manager_other %}
+<h2>Eléments déclencheur</h2>
+{% bootstrap_field form.triggers %}
+{% bootstrap_field form.triggers_others %}
+<h2>Types d'interventions</h2>
+{% bootstrap_field form.interventions %}
+{% bootstrap_field form.interventions_others %}
+<h2>Missions</h2>
+{% bootstrap_field form.structure_challenges %}
+<h2>Compétences de la structure</h2>
+{% bootstrap_field form.mobilized_skills %}
+{% bootstrap_field form.mobilized_skills_others %}
+{% bootstrap_field form.missing_skills %}
+{% bootstrap_field form.missing_skills_others %}
+<h2>Acteurs de l'ingénierie mobilisés</h2>
+
+<div id="stakeholdertype_formset" data-formset-prefix="{{ stakeholdertype_formset.prefix }}">
+    {{ stakeholdertype_formset.management_form }}
+    <div data-formset-body>
+        <!-- New forms will be inserted in here -->
+        {% for form in stakeholdertype_formset %}
+        <div data-formset-form>
+            <div class="container">
+                <div class="row">
+                    {% bootstrap_field form.stakeholder %}
+                    {% bootstrap_field form.detail %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- The empty form template. By wrapping this in a <script> tag, the
+    __prefix__ placeholder can easily be replaced in both attributes and
+    any scripts -->
+    <script type="form-template" data-formset-empty-form>
+        {% escapescript %}
+        <div data-formset-form>
+            <div class="container">
+                <div class="row">
+                    {% bootstrap_field stakeholdertype_formset.empty_form.stakeholder %}
+                    {% bootstrap_field stakeholdertype_formset.empty_form.detail %}
+                </div>
+            </div>
+        </div>
+        {% endescapescript %}
+    </script>
+
+    {% buttons %}
+    <input class="btn btn-primary" type="button" value="Ajouter un acteur" data-formset-add>
+    {% endbuttons %}
+
+    <script>jQuery(function($) {
+        $("#stakeholdertype_formset").formset({
+            animateForms: true,
+            reorderMode: 'dom',
+        });
+    });</script>
+
+</div>
+
+
+<h2>Calendrier</h2>
+{% bootstrap_field form.schedule %}
+<h2>Conditions de réussite, blocages et solutions</h2>
+{% bootstrap_field form.obstables %}
+
+{% buttons %}
+<button type="submit" class="btn btn-primary">
+    Enregistrer
+</button>
+{% endbuttons %}
 </form>
 
 {% endblock %}

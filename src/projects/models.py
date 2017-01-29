@@ -115,7 +115,7 @@ class Project(models.Model):
         ('private', u'Privé'),
     )
 
-    project_leader_type = models.CharField("Type de porteur de projet", choices=PROJECT_LEADER_TYPE_CHOICES, max_length=255, blank=True)
+    project_leader_type = models.CharField("Type de porteur de projet", choices=PROJECT_LEADER_TYPE_CHOICES, max_length=255, null=False, blank=False)
     project_leader_name = models.CharField("Nom du porteur de projet", max_length=255, blank=True)
 
     region = models.ForeignKey(Region, verbose_name="Région", blank=True, null=True)
