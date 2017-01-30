@@ -8,12 +8,6 @@ from .models import Project, Referent, StakeHolderType, Leader
 
 class ProjectForm(forms.ModelForm):
 
-    PROJECT_LEADER_TYPE_CHOICES = (
-        ('public', 'Public'),
-        ('private', u'Privé'),
-    )
-
-    project_leader_type = forms.CharField(label="", max_length=99, required=True, widget=forms.RadioSelect(choices=PROJECT_LEADER_TYPE_CHOICES))
     class Meta:
         model = Project
         exclude = ('referents', )
@@ -42,6 +36,13 @@ class StakeHolderTypeForm(forms.ModelForm):
 
 
 class LeaderForm(forms.ModelForm):
+
+    PROJECT_LEADER_TYPE_CHOICES = (
+        ('public', 'Public'),
+        ('private', u'Privé'),
+    )
+
+    type = forms.CharField(label="", max_length=99, required=True, widget=forms.RadioSelect(choices=PROJECT_LEADER_TYPE_CHOICES))
 
     class Meta:
         model = Leader

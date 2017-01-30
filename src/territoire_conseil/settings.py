@@ -124,3 +124,7 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM': 3,
     'MAX_ZOOM': 18,
 }
+
+BOOTSTRAP3 = {
+    'set_placeholder': False,
+}

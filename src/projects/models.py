@@ -180,7 +180,7 @@ class Referent(models.Model):
     lastname = models.CharField(u"Nom", max_length=255)
     function = models.CharField(u"Fonction", max_length=255, blank=True)
     structure = models.ForeignKey(Structure, verbose_name="Structure")
-    service = models.CharField(u"Service (éviter les sigles)", max_length=255, blank=True)
+    service = models.CharField(u"Service", max_length=255, blank=True, help_text=u"Eviter les sigles")
     mail = models.CharField(u"Mail", max_length=255)
     phone = models.CharField(u"Téléphone", max_length=255, blank=True)
 
