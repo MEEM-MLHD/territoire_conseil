@@ -3,7 +3,7 @@ from django import forms
 from leaflet.forms.widgets import LeafletWidget
 from djangoformsetjs.utils import formset_media_js
 
-from .models import Project, Referent, StakeHolderType
+from .models import Project, Referent, StakeHolderType, Leader
 
 
 class ProjectForm(forms.ModelForm):
@@ -18,24 +18,31 @@ class ProjectForm(forms.ModelForm):
         model = Project
         exclude = ('referents', )
         widgets = {'geom': LeafletWidget(),
-        		   'interventions': forms.CheckboxSelectMultiple,
-        		   'themes': forms.CheckboxSelectMultiple,
-        		   'triggers': forms.CheckboxSelectMultiple,
-        		   'mobilized_skills': forms.CheckboxSelectMultiple,
-        		   'missing_skills': forms.CheckboxSelectMultiple,
-                   #'project_leader_type': forms.RadioSelect,
-        			}
+               'interventions': forms.CheckboxSelectMultiple,
+               'themes': forms.CheckboxSelectMultiple,
+               'triggers': forms.CheckboxSelectMultiple,
+               'mobilized_skills': forms.CheckboxSelectMultiple,
+               'missing_skills': forms.CheckboxSelectMultiple,
+               #'project_leader_type': forms.RadioSelect,
+                }
 
 
 class ReferentForm(forms.ModelForm):
 
-	class Meta:
-		model = Referent
-		fields = '__all__'
+    class Meta:
+        model = Referent
+        fields = '__all__'
 
 
 class StakeHolderTypeForm(forms.ModelForm):
 
-	class Meta:
-		model = StakeHolderType
-		exclude = ('project', )
+    class Meta:
+        model = StakeHolderType
+        exclude = ('project', )
+
+
+class LeaderForm(forms.ModelForm):
+
+    class Meta:
+        model = Leader
+        exclude = ('project', )

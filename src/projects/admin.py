@@ -11,11 +11,17 @@ class StakeHolderTypeInline(admin.TabularInline):
     verbose_name_plural = "Acteurs de l'ingénierie mobilisés"
 
 
+class LeaderInline(admin.TabularInline):
+    model = Leader
+    extra = 1
+    verbose_name = "Porteur de projet"
+    verbose_name_plural = "Porteurs de projet"
+
+
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = (StakeHolderTypeInline, )
+    inlines = (LeaderInline, StakeHolderTypeInline, )
     fieldsets = (
         (None, {'fields': ('name', 'description')}),
-        (u"Porteur de projet", {'fields': ('project_leader_type', 'project_leader_name')}),
         (u"Périmètre du projet", {'fields':
             ('region',
              'department',

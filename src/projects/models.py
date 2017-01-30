@@ -110,13 +110,13 @@ class Project(models.Model):
 
     description = models.TextField("Description du projet", blank=True, help_text="5 lignes maximum")
 
-    PROJECT_LEADER_TYPE_CHOICES = (
-        ('public', 'Public'),
-        ('private', u'Privé'),
-    )
+    # PROJECT_LEADER_TYPE_CHOICES = (
+    #     ('public', 'Public'),
+    #     ('private', u'Privé'),
+    # )
 
-    project_leader_type = models.CharField("Type de porteur de projet", choices=PROJECT_LEADER_TYPE_CHOICES, max_length=255, null=False, blank=False)
-    project_leader_name = models.CharField("Nom du porteur de projet", max_length=255, blank=True)
+    #project_leader_type = models.CharField("Type de porteur de projet", choices=PROJECT_LEADER_TYPE_CHOICES, max_length=255, null=False, blank=False)
+    #project_leader_name = models.CharField("Nom du porteur de projet", max_length=255, blank=True)
 
     region = models.ForeignKey(Region, verbose_name="Région", blank=True, null=True)
     department = models.ForeignKey(Department, verbose_name="Département", blank=True, null=True)
@@ -138,7 +138,7 @@ class Project(models.Model):
     triggers_others = models.CharField(u"Autres éléments déclencheurs", max_length=255, blank=True)
 
     interventions = models.ManyToManyField(Intervention)
-    interventions_others = models.CharField(max_length=255, blank=True)
+    interventions_others = models.CharField(u"Autres interventions", max_length=255, blank=True)
 
     structure_challenges = models.TextField(u"Missions / enjeux pour votre structure (5 lignes max.)", blank=True)
 
@@ -148,9 +148,11 @@ class Project(models.Model):
     missing_skills_others = models.CharField(u"Autres compétences manquantes", max_length=255, blank=True)
 
     schedule = models.ForeignKey(Schedule, verbose_name="Calendrier d'accompagnement")
-    obstables = models.TextField(u"Blocages rencontrés, comment ont été levés les blocages (10 lignes max.)", blank=True)
+    obstables = models.TextField(u"", blank=True, help_text="10 lignes max.")
 
     stakeholders = models.ManyToManyField(StakeHolder, through='StakeHolderType')
+
+    comments = models.TextField(u"", blank=True)
 
     update = models.DateTimeField(auto_now=True)
     creation = models.DateTimeField(auto_now_add=True)
@@ -162,12 +164,23 @@ class Project(models.Model):
         return self.name
 
 
+class Leader(models.Model):
+    PROJECT_LEADER_TYPE_CHOICES = (
+        ('public', 'Public'),
+        ('private', u'Privé'),
+    )
+
+    type = models.CharField("Type de porteur de projet", choices=PROJECT_LEADER_TYPE_CHOICES, max_length=255, null=False, blank=False)
+    name = models.CharField("Nom du porteur de projet", max_length=255, blank=True)
+    project = models.ForeignKey(Project)
+
+
 class Referent(models.Model):
     firstname = models.CharField(u"Prénom", max_length=255, blank=True)
     lastname = models.CharField(u"Nom", max_length=255)
     function = models.CharField(u"Fonction", max_length=255, blank=True)
     structure = models.ForeignKey(Structure, verbose_name="Structure")
-    service = models.CharField(u"Service", max_length=255, blank=True)
+    service = models.CharField(u"Service (éviter les sigles)", max_length=255, blank=True)
     mail = models.CharField(u"Mail", max_length=255)
     phone = models.CharField(u"Téléphone", max_length=255, blank=True)
 
