@@ -21,24 +21,25 @@ class LeaderInline(admin.TabularInline):
 class ProjectAdmin(admin.ModelAdmin):
     inlines = (LeaderInline, StakeHolderTypeInline, )
     fieldsets = (
-        (None, {'fields': ('name', 'description')}),
+        (None, {'fields': ('name', 'description', 'image', 'begin', 'end', 'url')}),
         (u"Périmètre du projet", {'fields':
             ('region',
              'department',
+             'land',
              ('epci_name', 'epci_siren'),
              ('town_name', 'town_insee'),
              'geom',
+             'shapefile',
             )
             }),
-        (u"Référents", {'fields': ('referents', )}),
+        (u"Personnes en charge du dossier", {'fields': ('referents', )}),
         (u"Thèmatiques", {'fields': ('themes', 'themes_others' )}),
-        (u"Pilotage de la mission d'appui", {'fields': ('manager', 'manager_other')}),
         (u"Eléments déclencheur", {'fields': ('triggers', 'triggers_others')}),
         (u"Types d'interventions", {'fields': ('interventions', 'interventions_others')}),
         (u"Missions", {'fields': ('structure_challenges', )}),
-        (u"Compétences de la structure", {'fields': ('mobilized_skills', 'mobilized_skills_others', 'missing_skills', 'missing_skills_others')}),
-        (u"Calendrier", {'fields': ('schedule', )}),
+        (u"Calendrier", {'fields': ('schedule', 'state')}),
         (u"Conditions de réussite, blocages et solutions", {'fields': ('obstables', )}),
+        (u'Commentaire, autre', {'fields': ('comments', 'attachment')})
     )
 
 

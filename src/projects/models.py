@@ -124,16 +124,16 @@ class Project(models.Model):
     geom = models.GeometryField(u"Dessiner le contour du projet", blank=True, null=True)
     shapefile = models.FileField(u"ou importer un ficher shape", upload_to='shapefile/', blank=True, null=True)
 
-    referents = models.ManyToManyField('Referent')
+    referents = models.ManyToManyField('Referent', blank=True)
 
-    themes = models.ManyToManyField(Theme, verbose_name=u"Thématiques")
+    themes = models.ManyToManyField(Theme, verbose_name=u"Thématiques", blank=True)
     themes_others = models.CharField(u"Autres thématiques", max_length=255, blank=True)
 
 
-    triggers = models.ManyToManyField(Trigger, verbose_name=u"Eléments déclencheur")
+    triggers = models.ManyToManyField(Trigger, verbose_name=u"Eléments déclencheur", blank=True)
     triggers_others = models.CharField(u"Autres éléments déclencheurs", max_length=255, blank=True)
 
-    interventions = models.ManyToManyField(Intervention)
+    interventions = models.ManyToManyField(Intervention, blank=True)
     interventions_others = models.CharField(u"Autres interventions", max_length=255, blank=True)
 
     structure_challenges = models.TextField(u"Missions / enjeux pour votre structure (5 lignes max.)", blank=True)
@@ -153,7 +153,7 @@ class Project(models.Model):
     state = models.CharField(u"Etat du projet", choices=STATE_CHOICES, max_length=12, default='in_progress')
     obstables = models.TextField(u"", blank=True, help_text="10 lignes max.")
 
-    stakeholders = models.ManyToManyField(StakeHolder, through='StakeHolderType')
+    stakeholders = models.ManyToManyField(StakeHolder, through='StakeHolderType', blank=True)
 
     comments = models.TextField(u"", blank=True)
 

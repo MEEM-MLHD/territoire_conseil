@@ -5,7 +5,12 @@ from .forms import ProjectForm, ReferentForm, StakeHolderTypeForm, LeaderForm
 
 
 def add(request):
-    form = ProjectForm()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    form = ProjectForm(request.POST)
     referent_formset = formset_factory(ReferentForm)
     stakeholdertype_formset = formset_factory(StakeHolderTypeForm)
     leader_formset = formset_factory(LeaderForm)
