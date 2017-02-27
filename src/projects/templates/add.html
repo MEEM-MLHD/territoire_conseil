@@ -8,6 +8,9 @@
     {% csrf_token %}
     {% bootstrap_field form.name placeholder="popop" %}
     {% bootstrap_field form.description %}
+    {% bootstrap_field form.begin %}
+    {% bootstrap_field form.end %}
+    {% bootstrap_field form.url %}
     <h2>Porteur(s) de projet</h2>
 
 <div id="leader_formset" data-formset-prefix="{{ leader_formset.prefix }}">
@@ -89,6 +92,7 @@
       {% bootstrap_field form.region %}
   </div>
   <div class="tab-pane" id="country" role="tabpanel">
+        {% bootstrap_field form.land %}
   </div>
   <div class="tab-pane" id="epci" role="tabpanel">
       {% bootstrap_field form.epci_name %}
@@ -99,11 +103,13 @@
     {% bootstrap_field form.town_insee %}
 </div>
 <div class="tab-pane" id="autre" role="tabpanel">
+    {% bootstrap_field form.geom %}
+    {% bootstrap_field form.shapefile %}
 </div>
 </div>
 
-{% bootstrap_field form.geom %}
-<h2>Référents</h2>
+
+<h2>Personnes en charge du dossier</h2>
 
 <div id="referent_formset" data-formset-prefix="{{ referent_formset.prefix }}">
     {{ referent_formset.management_form }}
@@ -166,22 +172,6 @@
 <h2>Thématiques</h2>
 {% bootstrap_field form.themes %}
 {% bootstrap_field form.themes_others %}
-<h2>Pilotage de la mission d'appui</h2>
-{% bootstrap_field form.manager %}
-{% bootstrap_field form.manager_other %}
-<h2>Eléments déclencheur</h2>
-{% bootstrap_field form.triggers %}
-{% bootstrap_field form.triggers_others %}
-<h2>Types d'interventions</h2>
-{% bootstrap_field form.interventions %}
-{% bootstrap_field form.interventions_others %}
-<h2>Missions</h2>
-{% bootstrap_field form.structure_challenges %}
-<h2>Compétences de la structure</h2>
-{% bootstrap_field form.mobilized_skills %}
-{% bootstrap_field form.mobilized_skills_others %}
-{% bootstrap_field form.missing_skills %}
-{% bootstrap_field form.missing_skills_others %}
 <h2>Acteurs de l'ingénierie mobilisés</h2>
 
 <div id="stakeholdertype_formset" data-formset-prefix="{{ stakeholdertype_formset.prefix }}">
@@ -194,6 +184,7 @@
                 <div class="row">
                     {% bootstrap_field form.stakeholder %}
                     {% bootstrap_field form.detail %}
+                    {% bootstrap_field form.manager %}
                 </div>
             </div>
         </div>
@@ -229,9 +220,18 @@
 
 </div>
 
+<h2>Eléments déclencheur</h2>
+{% bootstrap_field form.triggers %}
+{% bootstrap_field form.triggers_others %}
+<h2>Types d'interventions</h2>
+{% bootstrap_field form.interventions %}
+{% bootstrap_field form.interventions_others %}
+<h2>Missions</h2>
+{% bootstrap_field form.structure_challenges %}
 
 <h2>Calendrier</h2>
 {% bootstrap_field form.schedule %}
+{% bootstrap_field form.state %}
 <h2>Conditions de réussite, blocages et solutions</h2>
 <p>Les 3 points devront être brièvement présentés</p>
 {% bootstrap_field form.obstables show_label=False %}
