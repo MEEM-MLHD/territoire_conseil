@@ -8,6 +8,7 @@
     {% csrf_token %}
     {% bootstrap_field form.name placeholder="popop" %}
     {% bootstrap_field form.description %}
+    {% bootstrap_field form.image %}
     {% bootstrap_field form.begin %}
     {% bootstrap_field form.end %}
     {% bootstrap_field form.url %}
@@ -238,6 +239,8 @@
 
 <h2>Champ libre</h2>
 {% bootstrap_field form.comments show_label=False %}
+
+{% bootstrap_field form.attachment %}
 
 {% buttons %}
 <button type="submit" class="btn btn-primary btn-block">

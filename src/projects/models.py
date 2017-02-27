@@ -157,7 +157,7 @@ class Project(models.Model):
 
     comments = models.TextField(u"", blank=True)
 
-    attachment = models.FileField(upload_to="attachment/", null=True, blank=True)
+    attachment = models.FileField(u"Pièce jointe", upload_to="attachment/", null=True, blank=True)
 
     update = models.DateTimeField(auto_now=True)
     creation = models.DateTimeField(auto_now_add=True)
