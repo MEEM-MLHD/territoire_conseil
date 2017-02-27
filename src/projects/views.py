@@ -10,7 +10,7 @@ def add(request):
         if form.is_valid():
             form.save()
 
-    form = ProjectForm(request.POST)
+    form = ProjectForm()
     referent_formset = formset_factory(ReferentForm)
     stakeholdertype_formset = formset_factory(StakeHolderTypeForm)
     leader_formset = formset_factory(LeaderForm)

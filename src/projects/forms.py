@@ -10,14 +10,11 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        exclude = ('referents', )
+        exclude = ('referents', 'stakeholders')
         widgets = {'geom': LeafletWidget(),
                'interventions': forms.CheckboxSelectMultiple,
                'themes': forms.CheckboxSelectMultiple,
                'triggers': forms.CheckboxSelectMultiple,
-               'mobilized_skills': forms.CheckboxSelectMultiple,
-               'missing_skills': forms.CheckboxSelectMultiple,
-               #'project_leader_type': forms.RadioSelect,
                 }
 
 
