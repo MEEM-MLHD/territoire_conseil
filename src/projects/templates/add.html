@@ -119,6 +119,14 @@
     </ul>
 
 <div class="tab-content">
+  <div class="tab-pane" id="commune" role="tabpanel">
+    {% bootstrap_field form.town_name %}
+    {% bootstrap_field form.town_insee %}
+  </div>
+  <div class="tab-pane" id="epci" role="tabpanel">
+      {% bootstrap_field form.epci_name %}
+      {% bootstrap_field form.epci_siren %}
+  </div>
   <div class="tab-pane active" id="department" role="tabpanel">
       {% bootstrap_field form.department %}
   </div>
@@ -128,18 +136,10 @@
   <div class="tab-pane" id="country" role="tabpanel">
         {% bootstrap_field form.land %}
   </div>
-  <div class="tab-pane" id="epci" role="tabpanel">
-      {% bootstrap_field form.epci_name %}
-      {% bootstrap_field form.epci_siren %}
-  </div>
-  <div class="tab-pane" id="commune" role="tabpanel">
-    {% bootstrap_field form.town_name %}
-    {% bootstrap_field form.town_insee %}
-</div>
-<div class="tab-pane" id="autre" role="tabpanel">
+  <div class="tab-pane" id="autre" role="tabpanel">
     {% bootstrap_field form.geom %}
     {% bootstrap_field form.shapefile %}
-</div>
+  </div>
 </div>
 
 
