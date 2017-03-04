@@ -18,8 +18,15 @@ class LeaderInline(admin.TabularInline):
     verbose_name_plural = "Porteurs de projet"
 
 
+class ReferentInline(admin.TabularInline):
+    model = Referent
+    extra = 1
+    verbose_name = "Personne en charge du dossier"
+    verbose_name_plural = "Personnes en charge du dossier"
+
+
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = (LeaderInline, StakeHolderTypeInline, )
+    inlines = (LeaderInline, ReferentInline, StakeHolderTypeInline, )
     fieldsets = (
         (None, {'fields': ('name', 'description', 'image', 'begin', 'end', 'url')}),
         (u"Périmètre du projet", {'fields':
@@ -32,7 +39,6 @@ class ProjectAdmin(admin.ModelAdmin):
              'shapefile',
             )
             }),
-        (u"Personnes en charge du dossier", {'fields': ('referents', )}),
         (u"Thèmatiques", {'fields': ('themes', 'themes_others' )}),
         (u"Eléments déclencheur", {'fields': ('triggers', 'triggers_others')}),
         (u"Types d'interventions", {'fields': ('interventions', 'interventions_others')}),
@@ -44,7 +50,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Region)
-admin.site.register(Referent)
+#admin.site.register(Referent)
 admin.site.register(Department)
 admin.site.register(Intervention)
 admin.site.register(StakeHolder)

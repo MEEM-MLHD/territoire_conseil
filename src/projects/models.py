@@ -124,7 +124,7 @@ class Project(models.Model):
     geom = models.GeometryField(u"Dessiner le contour du projet", blank=True, null=True)
     shapefile = models.FileField(u"ou importer un ficher shape", upload_to='shapefile/', blank=True, null=True)
 
-    referents = models.ManyToManyField('Referent', blank=True)
+    #referents = models.ManyToManyField('Referent', blank=True)
 
     themes = models.ManyToManyField(Theme, verbose_name=u"Thématiques", blank=True)
     themes_others = models.CharField(u"Autres thématiques", max_length=255, blank=True)
@@ -188,6 +188,7 @@ class Referent(models.Model):
     service = models.CharField(u"Service", max_length=255, blank=True, help_text=u"Eviter les sigles")
     mail = models.CharField(u"Mail", max_length=255)
     phone = models.CharField(u"Téléphone", max_length=255, blank=True)
+    project = models.ForeignKey(Project, null=True)
 
 
 class StakeHolderType(models.Model):
