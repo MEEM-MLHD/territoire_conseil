@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load bootstrap3 formset_tags %}
 
+{% block head %}
+    {{ block.super }}
+{% endblock head %}
+
 {% block content %}
 
 {% if form.errors %}
@@ -39,11 +43,17 @@
 <h1>Ajouter un projet</h1>
 <form action="{% url 'add' %}" method="post" class="form" enctype='multipart/form-data'>
     {% csrf_token %}
-    {% bootstrap_field form.name placeholder="popop" %}
+    {% bootstrap_field form.name %}
     {% bootstrap_field form.description %}
     {% bootstrap_field form.image %}
     {% bootstrap_field form.begin %}
+    <script type="text/javascript">
+        $('#id_begin').datepicker({format: 'dd/mm/yyyy',});
+    </script>
     {% bootstrap_field form.end %}
+    <script type="text/javascript">
+        $('#id_end').datepicker({format: 'dd/mm/yyyy',});
+    </script>
     {% bootstrap_field form.url %}
     <h2>Porteur(s) de projet</h2>
 
@@ -98,7 +108,7 @@
     <h2>Périmètre du projet</h2>
 
     <ul class="nav nav-pills nav-justified" role="tablist">
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link active" data-toggle="tab" href="#commune" role="tab">Commune</a>
         </li>
         <li class="nav-item">
@@ -119,7 +129,7 @@
     </ul>
 
 <div class="tab-content">
-  <div class="tab-pane" id="commune" role="tabpanel">
+  <div class="tab-pane active" id="commune" role="tabpanel">
     {% bootstrap_field form.town_name %}
     {% bootstrap_field form.town_insee %}
   </div>
@@ -127,7 +137,7 @@
       {% bootstrap_field form.epci_name %}
       {% bootstrap_field form.epci_siren %}
   </div>
-  <div class="tab-pane active" id="department" role="tabpanel">
+  <div class="tab-pane" id="department" role="tabpanel">
       {% bootstrap_field form.department %}
   </div>
   <div class="tab-pane" id="region" role="tabpanel">

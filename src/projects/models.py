@@ -57,16 +57,6 @@ class Manager(models.Model):
         return self.label
 
 
-# class Skill(models.Model):
-#     label = models.CharField(max_length=255)
-
-#     class Meta:
-#         verbose_name = u"Compétence"
-
-#     def __unicode__(self):
-#         return self.label
-
-
 class Trigger(models.Model):
     label = models.CharField(max_length=255)
 
@@ -124,8 +114,6 @@ class Project(models.Model):
     geom = models.GeometryField(u"Dessiner le contour du projet", blank=True, null=True)
     shapefile = models.FileField(u"ou importer un ficher shape", upload_to='shapefile/', blank=True, null=True)
 
-    #referents = models.ManyToManyField('Referent', blank=True)
-
     themes = models.ManyToManyField(Theme, verbose_name=u"Thématiques", blank=True)
     themes_others = models.CharField(u"Autres thématiques", max_length=255, blank=True)
 
@@ -137,11 +125,6 @@ class Project(models.Model):
     interventions_others = models.CharField(u"Autres interventions", max_length=255, blank=True)
 
     structure_challenges = models.TextField(u"Missions / enjeux pour votre structure (5 lignes max.)", blank=True)
-
-    # mobilized_skills = models.ManyToManyField(Skill, verbose_name=u"Compétences mobilisées", related_name="mobilized_skill")
-    # mobilized_skills_others = models.CharField(u"Autres compétences mobilisées", max_length=255, blank=True)
-    # missing_skills = models.ManyToManyField(Skill, verbose_name=u"Compétences manquantes", related_name="missing_skill")
-    # missing_skills_others = models.CharField(u"Autres compétences manquantes", max_length=255, blank=True)
 
     schedule = models.ForeignKey(Schedule, verbose_name="Calendrier d'accompagnement")
 

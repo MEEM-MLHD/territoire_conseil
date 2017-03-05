@@ -23,7 +23,7 @@
 
 <ul>
 {% for project in filter.qs %}
-	<li>{{ project }}</li>
+	<li><a href="{% url 'detail' project.pk %}">{{ project }}</a></li>
 {% endfor %}
 </ul>
 {% endblock content %}

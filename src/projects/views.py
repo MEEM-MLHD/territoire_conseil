@@ -24,6 +24,13 @@ def profile(request):
     })
 
 
+def detail(request, pk):
+    project = Project.objects.get(id=pk)
+    return render(request, 'detail.html', {
+        'project': project
+    })
+
+
 @never_cache
 def add(request):
     if request.method == 'POST':

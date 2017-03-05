@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>{{ project.name }}</h2>
+
+<hr>
+
+Description : {{ project.description|linebreaks }}<br />
+Date de début du projet : {{ project.begin }}<br />
+Date de fin du projet : {{ project.end }}<br />
+
+{% if project.image %}
+<img src="{{ project.image.url }}" style="width:100px" /><br />
+{% endif %}
+
+Lien vers le site du projet : <a href="{{ project.url }}">{{ project.url }}</a> <br />
+<hr>
+<h3>Porteurs de projet</h3>
+{% for leader in project.leader_set.all %}
+{{ leader.get_type_display }} {{ leader.name }}<br>
+{% endfor %}
+<hr>
+<h3>Périmètre du projet</h3>
+{% if project.region %}
+Région : {{ project.region }}<br />
+{% endif %}
+{% if project.department %}
+Départment : {{ project.department }}<br />
+{% endif %}
+{% if project.epci_name %}
+Nom de l'EPCI : {{ project.epci_name }}<br />
+{% endif %}
+{% if project.epci_siren %}
+N° Siren de l'EPCI : {{ project.epci_siren }}<br />
+{% endif %}
+{% if project.town_name %}
+Ville town_name : {{ project.town_name }}<br />
+{% endif %}
+{% if project.town_insee %}
+Code INSEE de la ville : {{ project.town_insee }}<br />
+{% endif %}
+{% if project.land %}
+Pays / EPTR : {{ project.land }}<br />
+{% endif %}
+{% if project.geom %}
+geom : {{ project.geom }}<br />
+{% endif %}
+{% if project.shapefile %}
+shapefile : {{ project.shapefile }}<br />
+{% endif %}
+<hr>
+<h3>Personnes en charge du dossier</h3>
+{% for referent in project.referent_set.all %}
+{{ referent.firstname }} {{ referent.lastname }}, {{ referent.function }}, {{ referent.structure }}, {{ referent.service }}, {{ referent.mail }}, {{ referent.phone }} <br>
+{% endfor %}
+<hr>
+<h3>Thèmatiques</h3>
+{% if projec.themes.all %}
+themes : {{ project.themes.all|join:', ' }}<br />
+{% endif %}
+{% if project.themes_others %}
+{{ project.themes_others }}<br />
+{% endif %}
+
+<hr>
+<h3>Acteurs de l'ingénierie mobilisés</h3>
+{% if project.stakeholders.all %}
+{% for s in project.stakeholdertype_set.all %}
+	{{ s.stakeholder }}, {{ s.detail }}, {{ s.manager }} <br />
+{% endfor %}
+{% endif %}
+
+<hr>
+<h3>Eléments déclencheurs</h3>
+{% if project.triggers.all %}
+triggers : {{ project.triggers.all|join:', ' }}<br />
+{% endif %}
+{% if project.triggers_others %}
+{{ project.triggers_others }}<br />
+{% endif %}
+
+<hr>
+<h3>Types d'interventions</h3>
+{% if project.interventions.all %}
+{{ project.interventions.all|join:', ' }}
+{% endif %}
+{% if project.interventions_others %}
+{{ project.interventions_others }}<br />
+{% endif %}
+
+<hr>
+<h3>Missions</h3>
+{{ project.structure_challenges|linebreaks  }}<br />
+
+<hr>
+<h3>Calendrier</h3>
+Intervention : {{ project.schedule }}<br />
+Etat : {{ project.get_state_display }}<br />
+<hr>
+<h3>Conditions de réussite, blocages et solutions</h3>
+{{ project.obstables|linebreaks  }}<br />
+
+
+<hr>
+<h3>Commentaire</h3>
+{{ project.comments|linebreaks  }}<br />
+{% if project.attachment %}
+Pièce jointe : <a href="{{ project.attachment.url }}">{{ project.attachment }}</a><br />
+{% endif %}
+<br />
+
+<hr>
+Mise à jour de cette fiche : {{ project.update }} - Création : {{ project.creation }}<br />
+
+{% endblock content %}
