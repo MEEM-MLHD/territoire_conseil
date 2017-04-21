@@ -1,16 +1,25 @@
+import json
+import requests
+from djgeojson.serializers import Serializer as GeoJSONSerializer
+
 from django.shortcuts import render
 from django.forms import formset_factory, inlineformset_factory, modelformset_factory
 from django.views.decorators.cache import never_cache
+from django.contrib.gis.geos import GEOSGeometry, GeometryCollection
 
 from .filters import ProjectFilter
 from .forms import ProjectForm, ReferentForm, StakeHolderTypeForm, LeaderForm
-from .models import Project, Referent, StakeHolderType, Leader
+from .models import Project, Referent, StakeHolderType, Leader, Department, Region
 
 
 def home(request):
     queryset = Project.objects.all()
     f = ProjectFilter(request.GET, queryset=queryset)
-    return render(request, 'home.html', {'filter': f})
+    geojson = GeoJSONSerializer().serialize(f.qs,
+          geometry_field='geom',
+          properties=('name', 'detail_url', 'feature_image', ))
+
+    return render(request, 'home.html', {'filter': f, 'geojson': geojson})
 
 
 def profile(request):
@@ -37,6 +46,25 @@ def add(request):
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             project = form.save()
+            if project.town_insee:
+                # town_insee
+                r = requests.get('https://geo.api.gouv.fr/communes?code=%s&fields=contour,departement,region' % (project.town_insee))
+                data = r.json()[0]
+                coord = data['contour']
+                mpoly = GEOSGeometry(json.dumps(coord))
+                project.geom = GeometryCollection(mpoly)
+
+                department_name = data['departement']['nom']
+                department_insee = data['departement']['code']
+                departement, created = Department.objects.get_or_create(name=department_name, insee=department_insee)
+                project.department = departement
+
+                region_name = data['region']['nom']
+                region_insee = data['region']['code']
+                region, created = Region.objects.get_or_create(name=region_name, insee=region_insee)
+                project.region = region
+
+                project.save()
 
             ReferentFormSet = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0)
             referent_formset = ReferentFormSet(request.POST, request.FILES, instance=project)

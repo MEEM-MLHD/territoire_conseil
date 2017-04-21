@@ -26,4 +26,42 @@
 	<li><a href="{% url 'detail' project.pk %}">{{ project }}</a></li>
 {% endfor %}
 </ul>
+
+<script type="text/javascript">
+  $(window).on('map:init', function (e) {
+      function onEachFeature(feature, layer) {
+      if (feature.properties) {
+          var content_img = '';
+          if(feature.properties.feature_image !== null){
+          var content_img = "<img src='"+feature.properties.feature_image+"' style='width:100%' />"
+          }
+          var content = content_img+'<b> - '+feature.properties.name+'</b>'+"<a target='_blank' href='"+feature.properties.detail_url+"' class='btn btn-outline-primary btn-block btn-sm' role='button'>Détail</a> </div>";
+
+          layer.bindPopup(content);
+          }
+      }
+      var detail = e.originalEvent ?
+                   e.originalEvent.detail : e.detail;
+
+      L.geoJson({{ geojson|safe }}, {
+        style: function(feature) {
+          switch (feature.properties.state) {
+              case 'labeled':
+                return {color: "rgba(99, 255, 132, 0.8)", "opacity": 1, fillColor:"rgba(99, 255, 132, 0.8)"};
+              case 'engaged':
+                return {color: "rgba(99, 125, 132, 0.4)", "opacity": 1, fillColor:"rgba(99, 125, 132, 0.4)"};
+              case 'charte':
+                return {color: "rgba(99, 0, 132, 0.2)", "opacity": 1, fillColor:"#dddddd"};
+              case 'none':
+                return {color: "rgba(100, 100, 100, 0.2)", "opacity": 1, fillColor:"#dddddd"};
+          }
+        },
+        onEachFeature: onEachFeature,
+        pointToLayer: function(feature, latlng) {
+          return new L.CircleMarker(latlng, {radius: 1, fillOpacity: 0.85});
+        }
+      }).addTo(detail.map);
+  });
+</script>
+
 {% endblock content %}

@@ -13,8 +13,9 @@ Date de fin du projet : {{ project.end }}<br />
 {% if project.image %}
 <img src="{{ project.image.url }}" style="width:100px" /><br />
 {% endif %}
-
+{% if project.url %}
 Lien vers le site du projet : <a href="{{ project.url }}">{{ project.url }}</a> <br />
+{% endif %}
 <hr>
 <h3>Porteurs de projet</h3>
 {% for leader in project.leader_set.all %}
@@ -35,7 +36,7 @@ Nom de l'EPCI : {{ project.epci_name }}<br />
 N° Siren de l'EPCI : {{ project.epci_siren }}<br />
 {% endif %}
 {% if project.town_name %}
-Ville town_name : {{ project.town_name }}<br />
+Ville : {{ project.town_name }}<br />
 {% endif %}
 {% if project.town_insee %}
 Code INSEE de la ville : {{ project.town_insee }}<br />
@@ -43,9 +44,11 @@ Code INSEE de la ville : {{ project.town_insee }}<br />
 {% if project.land %}
 Pays / EPTR : {{ project.land }}<br />
 {% endif %}
+{% comment %}
 {% if project.geom %}
 geom : {{ project.geom }}<br />
 {% endif %}
+{% endcomment %}
 {% if project.shapefile %}
 shapefile : {{ project.shapefile }}<br />
 {% endif %}

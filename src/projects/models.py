@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.gis.db import models
+from django.core.urlresolvers import reverse
 
 
 class Region(models.Model):
@@ -149,6 +150,17 @@ class Project(models.Model):
 
     update = models.DateTimeField(auto_now=True)
     creation = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def detail_url(self):
+        return reverse('detail', kwargs={'pk':self.id})
+
+    @property
+    def feature_image(self):
+        if self.image:
+            return self.image.url
+        return None
+
 
     class Meta:
         verbose_name = "Projet"

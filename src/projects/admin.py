@@ -26,6 +26,9 @@ class ReferentInline(admin.TabularInline):
 
 
 class ProjectAdmin(admin.ModelAdmin):
+    list_filter = ('region', 'department', 'themes', 'triggers', 'interventions', 'schedule', 'stakeholders', 'begin', 'end' )
+    list_display = ('name', 'state', 'begin', 'end', 'url' )
+    search_fields = ('name', 'description', )
     inlines = (LeaderInline, ReferentInline, StakeHolderTypeInline, )
     fieldsets = (
         (None, {'fields': ('name', 'description', 'image', 'begin', 'end', 'url')}),
