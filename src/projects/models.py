@@ -117,6 +117,11 @@ class Project(models.Model):
     themes = models.ManyToManyField(Theme, verbose_name=u"Thématiques", blank=True)
     themes_others = models.CharField(u"Autres thématiques", max_length=255, blank=True)
 
+    funding_european = models.CharField(u"Financement européen", max_length=255, blank=True, help_text=u"Préciser le type de financement européen s'il y a lieu")
+    funding_national = models.CharField(u"Financement national", max_length=255, blank=True, help_text=u"Préciser le type de financement national s'il y a lieu")
+    funding_regional = models.CharField(u"Financement régional", max_length=255, blank=True, help_text=u"Préciser le type de financement régional s'il y a lieu")
+    funding_departmental = models.CharField(u"Financement départemental", max_length=255, blank=True, help_text=u"Préciser le type de financement départemental s'il y a lieu")
+    funding_other = models.CharField(u"Autre financement", max_length=255, blank=True, help_text=u"Préciser de quel autre type de financement le projet a bénéficier")
 
     triggers = models.ManyToManyField(Trigger, verbose_name=u"Eléments déclencheur", blank=True)
     triggers_others = models.CharField(u"Autres éléments déclencheurs", max_length=255, blank=True)
@@ -136,7 +141,7 @@ class Project(models.Model):
     state = models.CharField(u"Etat du projet", choices=STATE_CHOICES, max_length=12, default='in_progress')
     obstables = models.TextField(u"", blank=True, help_text="10 lignes max.")
 
-    stakeholders = models.ManyToManyField(StakeHolder, through='StakeHolderType', blank=True)
+    stakeholders = models.ManyToManyField(StakeHolder, verbose_name=u"Acteurs de l'ingénierie mobilisés", through='StakeHolderType', blank=True)
 
     comments = models.TextField(u"", blank=True)
 
