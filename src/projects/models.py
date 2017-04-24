@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 class Region(models.Model):
     name = models.CharField(max_length=255)
     insee = models.CharField(max_length=255)
+    geom = models.GeometryField(blank=True, null=True)
 
     class Meta:
         verbose_name = u"Région"
@@ -20,6 +21,7 @@ class Region(models.Model):
 class Department(models.Model):
     name = models.CharField(max_length=255)
     insee = models.CharField(max_length=255)
+    geom = models.GeometryField(blank=True, null=True)
 
     class Meta:
         verbose_name = u"Département"

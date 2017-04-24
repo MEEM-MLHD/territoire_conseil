@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
+{% load leaflet_tags bootstrap3 %}
 
 {% block content %}
 
 <h2>{{ project.name }}</h2>
 
-<a href="{% url 'update' project.pk %}">Mettre à jour</a>
-
-<hr>
-
-Description : {{ project.description|linebreaks }}<br />
+{% if project.description %}
+{{ project.description|linebreaks }}<br />
+{% endif %}
+{% if project.begin %}
 Date de début du projet : {{ project.begin }}<br />
+{% endif %}
+{% if project.end %}
 Date de fin du projet : {{ project.end }}<br />
+{% endif %}
 
 {% if project.image %}
 <img src="{{ project.image.url }}" style="width:100px" /><br />
@@ -18,104 +21,157 @@ Date de fin du projet : {{ project.end }}<br />
 {% if project.url %}
 Lien vers le site du projet : <a href="{{ project.url }}">{{ project.url }}</a> <br />
 {% endif %}
-<hr>
+
+{% if project.leader_set.all %}
 <h3>Porteurs de projet</h3>
 {% for leader in project.leader_set.all %}
 {{ leader.get_type_display }} {{ leader.name }}<br>
 {% endfor %}
-<hr>
+{% endif %}
+
 <h3>Périmètre du projet</h3>
+<ul>
 {% if project.region %}
-Région : {{ project.region }}<br />
+<li>Région : {{ project.region }}</li>
 {% endif %}
 {% if project.department %}
-Départment : {{ project.department }}<br />
+<li>Départment : {{ project.department }}</li>
 {% endif %}
 {% if project.epci_name %}
-Nom de l'EPCI : {{ project.epci_name }}<br />
+<li>Nom de l'EPCI : {{ project.epci_name }}</li>
 {% endif %}
 {% if project.epci_siren %}
-N° Siren de l'EPCI : {{ project.epci_siren }}<br />
+<li>N° Siren de l'EPCI : {{ project.epci_siren }}</li>
 {% endif %}
 {% if project.town_name %}
-Ville : {{ project.town_name }}<br />
+<li>Ville : {{ project.town_name }}</li>
 {% endif %}
 {% if project.town_insee %}
-Code INSEE de la ville : {{ project.town_insee }}<br />
+<li>Code INSEE de la ville : {{ project.town_insee }}</li>
 {% endif %}
 {% if project.land %}
-Pays / EPTR : {{ project.land }}<br />
+<li>Pays / EPTR : {{ project.land }}</li>
 {% endif %}
-{% comment %}
+</ul>
+
 {% if project.geom %}
-geom : {{ project.geom }}<br />
+
+{% leaflet_map "yourmap" %}
+
+<script type="text/javascript">
+  $(window).on('map:init', function (e) {
+      var detail = e.originalEvent ?
+                   e.originalEvent.detail : e.detail;
+
+      var geojsonLayer = L.geoJson({{ geojson|safe }}, {
+        style: function(feature) {
+          switch (feature.properties.state) {
+              case 'labeled': return {color: "#728C00", "opacity": 1};
+              case 'engaged':   return {color: "#999999", "opacity": 1};
+              case 'none': return {color: "#dddddd", "opacity": 1};
+          }
+        },
+        pointToLayer: function(feature, latlng) {
+          return new L.CircleMarker(latlng, {radius: 1, fillOpacity: 0.85});
+        }
+      }).addTo(detail.map);
+      detail.map.fitBounds(geojsonLayer.getBounds());
+  });
+</script>
 {% endif %}
-{% endcomment %}
 {% if project.shapefile %}
 shapefile : {{ project.shapefile }}<br />
 {% endif %}
-<hr>
+
+{% if project.referent_set.all %}
 <h3>Personnes en charge du dossier</h3>
+<ul>
 {% for referent in project.referent_set.all %}
-{{ referent.firstname }} {{ referent.lastname }}, {{ referent.function }}, {{ referent.structure }}, {{ referent.service }}, {{ referent.mail }}, {{ referent.phone }} <br>
+<li>{{ referent.firstname }} {{ referent.lastname }}, {{ referent.function }}, {{ referent.structure }}, {{ referent.service }}, {{ referent.mail }}, {{ referent.phone }} </li>
 {% endfor %}
-<hr>
-<h3>Thèmatiques</h3>
-{% if projec.themes.all %}
-themes : {{ project.themes.all|join:', ' }}<br />
+</ul>
+{% endif %}
+
+{% if project.themes.all or project.themes_others %}
+<h3>Thématiques</h3>
+<ul>
+{% if project.themes.all %}
+{% for theme in project.themes.all %}
+<li>{{ theme }}</li>
+{% endfor %}
 {% endif %}
 {% if project.themes_others %}
-{{ project.themes_others }}<br />
+<li>{{ project.themes_others }}</li>
+{% endif %}
+</ul>
 {% endif %}
 
-<hr>
+{% if project.stakeholdertype_set.all %}
 <h3>Acteurs de l'ingénierie mobilisés</h3>
-{% if project.stakeholders.all %}
+{% if project.stakeholdertype_set.all %}
+<ul>
 {% for s in project.stakeholdertype_set.all %}
-	{{ s.stakeholder }}, {{ s.detail }}, {{ s.manager }} <br />
+	<li>{{ s.detail }}{% if s.manager %}, Pilote du projet{% endif %}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endif %}
+
+{% if project.triggers.all or project.triggers_others %}
+<h3>Eléments déclencheurs</h3>
+<ul>
+{% if project.triggers.all %}
+{% for trigger in project.triggers.all %}
+<li>{{ trigger.label }}</li>
 {% endfor %}
 {% endif %}
-
-<hr>
-<h3>Eléments déclencheurs</h3>
-{% if project.triggers.all %}
-triggers : {{ project.triggers.all|join:', ' }}<br />
-{% endif %}
 {% if project.triggers_others %}
-{{ project.triggers_others }}<br />
+<li>{{ project.triggers_others }}</li>
+{% endif %}
+</ul>
 {% endif %}
 
-<hr>
+{% if project.interventions.all or project.interventions_others %}
 <h3>Types d'interventions</h3>
+<ul>
 {% if project.interventions.all %}
-{{ project.interventions.all|join:', ' }}
+{% for intervention in project.interventions.all %}
+<li>{{ intervention.label }}</li>
+{% endfor %}
 {% endif %}
 {% if project.interventions_others %}
-{{ project.interventions_others }}<br />
+<li>{{ project.interventions_others }}</li>
+{% endif %}
+</ul>
 {% endif %}
 
-<hr>
+{% if project.structure_challenges %}
 <h3>Missions</h3>
 {{ project.structure_challenges|linebreaks  }}<br />
+{% endif %}
 
-<hr>
 <h3>Calendrier</h3>
-Intervention : {{ project.schedule }}<br />
-Etat : {{ project.get_state_display }}<br />
-<hr>
+<ul>
+<li>Intervention : {{ project.schedule }}</li>
+<li>Etat : {{ project.get_state_display }}</li>
+</ul>
+
+{% if project.obstables %}
 <h3>Conditions de réussite, blocages et solutions</h3>
 {{ project.obstables|linebreaks  }}<br />
+{% endif %}
 
-
-<hr>
+{% if project.comments or project.attachment %}
 <h3>Commentaire</h3>
 {{ project.comments|linebreaks  }}<br />
 {% if project.attachment %}
 Pièce jointe : <a href="{{ project.attachment.url }}">{{ project.attachment }}</a><br />
 {% endif %}
+{% endif %}
 <br />
 
 <hr>
 Mise à jour de cette fiche : {{ project.update }} - Création : {{ project.creation }}<br />
+<a class="btn btn-default" href="{% url 'update' project.pk %}">Mettre à jour</a>
 
 {% endblock content %}

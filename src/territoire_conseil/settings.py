@@ -128,6 +128,7 @@ LEAFLET_CONFIG = {
 
 BOOTSTRAP3 = {
     'set_placeholder': False,
+    'set_required': False,
 }
 
 FILTERS_DISABLE_HELP_TEXT = True

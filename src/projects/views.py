@@ -35,8 +35,13 @@ def profile(request):
 
 def detail(request, pk):
     project = Project.objects.get(id=pk)
+    geojson = GeoJSONSerializer().serialize([project, ],
+          geometry_field='geom',
+          properties=('name', 'detail_url', 'feature_image', ))
+
     return render(request, 'detail.html', {
-        'project': project
+        'project': project,
+        'geojson': geojson,
     })
 
 
