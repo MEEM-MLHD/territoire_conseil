@@ -40,8 +40,8 @@
 {% endif %}
 
 
-<h1>Ajouter un projet</h1>
-<form action="{% url 'add' %}" method="post" class="form" enctype='multipart/form-data'>
+<h1>Mettre à jour un projet</h1>
+<form action="{% url 'update' project.id %}" method="post" class="form" enctype='multipart/form-data'>
     {% csrf_token %}
     {% bootstrap_field form.name %}
     {% bootstrap_field form.description %}

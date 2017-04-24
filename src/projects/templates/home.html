@@ -3,8 +3,10 @@
 
 {% block content %}
 
+
+
 <div class="row">
-  <div class="col-sm-5">
+  <div class="col-sm-4">
 	<form action="" method="get">
 	  <small>
 		{% bootstrap_form filter.form %}
@@ -16,16 +18,33 @@
 	  {% endbuttons %}
 	</form>
 	</div>
-	<div class="col-sm-7">
+	<div class="col-sm-8">
 		{% leaflet_map "yourmap" %}
 	</div>
 </div>
 
-<ul>
-{% for project in filter.qs %}
-	<li><a href="{% url 'detail' project.pk %}">{{ project }}</a></li>
-{% endfor %}
-</ul>
+<h4>Les projets</h4>
+<table class="table">
+  <tr>
+    <th>Nom du projet</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+    <th>Région</th>
+    <th>Département</th>
+    <th>Mise à jour de la fiche</th>
+  </tr>
+  {% for project in filter.qs %}
+  <tr>
+    <td><a href="{% url 'detail' project.pk %}">{{ project }}</a></td>
+    <td>{{ project.begin }}</td>
+    <td>{{ project.end }}</td>
+    <td>{{ project.region }}</td>
+    <td>{{ project.department }}</td>
+    <td>{{ project.update }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 
 <script type="text/javascript">
   $(window).on('map:init', function (e) {

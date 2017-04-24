@@ -30,9 +30,11 @@ class Department(models.Model):
 
 class Intervention(models.Model):
     label = models.CharField(max_length=255)
+    order = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Intervention"
+        ordering = ['order', ]
 
     def __unicode__(self):
         return self.label
@@ -40,9 +42,11 @@ class Intervention(models.Model):
 
 class StakeHolder(models.Model):
     label = models.CharField(max_length=255)
+    order = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Acteur"
+        ordering = ['order', ]
 
     def __unicode__(self):
         return self.label
@@ -50,9 +54,11 @@ class StakeHolder(models.Model):
 
 class Manager(models.Model):
     label = models.CharField(max_length=255)
+    order = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = u"Pilote"
+        ordering = ['order', ]
 
     def __unicode__(self):
         return self.label
@@ -60,9 +66,11 @@ class Manager(models.Model):
 
 class Trigger(models.Model):
     label = models.CharField(max_length=255)
+    order = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = u"Elément déclencheur"
+        ordering = ['order', ]
 
     def __unicode__(self):
         return self.label
@@ -80,9 +88,11 @@ class Schedule(models.Model):
 
 class Theme(models.Model):
     label = models.CharField(max_length=255)
+    order = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = u"Thématique"
+        ordering = ['order', ]
 
     def __unicode__(self):
         return self.label
@@ -130,7 +140,7 @@ class Project(models.Model):
     interventions = models.ManyToManyField(Intervention, blank=True)
     interventions_others = models.CharField(u"Autres interventions", max_length=255, blank=True)
 
-    structure_challenges = models.TextField(u"Missions / enjeux pour votre structure (5 lignes max.)", blank=True)
+    structure_challenges = models.TextField(u"Missions / enjeux pour votre structure", blank=True, help_text="5 lignes maximum")
 
     schedule = models.ForeignKey(Schedule, verbose_name="Calendrier d'accompagnement")
 

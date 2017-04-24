@@ -52,15 +52,38 @@ class ProjectAdmin(admin.ModelAdmin):
     )
 
 
+class InterventionAdmin(admin.ModelAdmin):
+    list_display = ('label', 'order')
+    list_editable = ('order', )
+
+
+class StakeHolderAdmin(admin.ModelAdmin):
+    list_display = ('label', 'order')
+    list_editable = ('order', )
+
+
+class ManagerAdmin(admin.ModelAdmin):
+    list_display = ('label', 'order')
+    list_editable = ('order', )
+
+
+class ThemeAdmin(admin.ModelAdmin):
+    list_display = ('label', 'order')
+    list_editable = ('order', )
+
+
+class TriggerAdmin(admin.ModelAdmin):
+    list_display = ('label', 'order')
+    list_editable = ('order', )
+
+
 admin.site.register(Region)
-#admin.site.register(Referent)
 admin.site.register(Department)
-admin.site.register(Intervention)
-admin.site.register(StakeHolder)
-admin.site.register(Manager)
-#admin.site.register(Skill)
-admin.site.register(Theme)
-admin.site.register(Trigger)
+admin.site.register(Intervention, InterventionAdmin)
+admin.site.register(StakeHolder, StakeHolderAdmin)
+admin.site.register(Manager, ManagerAdmin)
+admin.site.register(Theme, ThemeAdmin)
+admin.site.register(Trigger, TriggerAdmin)
 admin.site.register(Schedule)
 admin.site.register(Structure)
 admin.site.register(Project, ProjectAdmin)

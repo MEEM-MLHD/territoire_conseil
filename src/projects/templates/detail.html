@@ -4,6 +4,8 @@
 
 <h2>{{ project.name }}</h2>
 
+<a href="{% url 'update' project.pk %}">Mettre à jour</a>
+
 <hr>
 
 Description : {{ project.description|linebreaks }}<br />
