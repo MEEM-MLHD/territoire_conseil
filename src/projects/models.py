@@ -13,6 +13,7 @@ class Region(models.Model):
 
     class Meta:
         verbose_name = u"Région"
+        ordering = ['name', ]
 
     def __unicode__(self):
         return self.name
@@ -22,9 +23,11 @@ class Department(models.Model):
     name = models.CharField(max_length=255)
     insee = models.CharField(max_length=255)
     geom = models.GeometryField(blank=True, null=True)
+    region = models.ForeignKey(Region, blank=True, null=True)
 
     class Meta:
         verbose_name = u"Département"
+        ordering = ['name', ]
 
     def __unicode__(self):
         return self.name
@@ -115,7 +118,7 @@ class Project(models.Model):
     begin = models.DateField(u"Date de début de projet", blank=True, null=True)
     end = models.DateField(u"Date prévisionnelle de fin de projet", blank=True, null=True)
     image = models.ImageField(upload_to="image", null=True, blank=True)
-    url = models.URLField("Pour en savoir plus (lien URL)", blank=True)
+    url = models.URLField("Pour en savoir plus", blank=True, help_text="Lien URL")
 
     region = models.ForeignKey(Region, verbose_name="Région", blank=True, null=True)
     department = models.ForeignKey(Department, verbose_name="Département", blank=True, null=True)
@@ -172,6 +175,17 @@ class Project(models.Model):
         if self.image:
             return self.image.url
         return None
+
+    @property
+    def geographic_zone(self):
+        if self.town_name:
+            return u"Ville : %s " % self.town_name
+        elif self.department:
+            return u"Département : %s" % self.department.name
+        elif self.region:
+            return u"Région : %s" % self.region.name
+        else:
+            return 'autre'
 
 
     class Meta:

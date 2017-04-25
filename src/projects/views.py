@@ -68,19 +68,22 @@ def add(request):
                 region_insee = data['region']['code']
                 region, created = Region.objects.get_or_create(name=region_name, insee=region_insee)
                 project.region = region
+            elif project.department:
+                project.geom = project.department.geom
+            elif project.region:
+                project.geom = project.region.geom
 
-                project.save()
 
-                return redirect('detail', pk=project.id)
+            project.save()
 
 
-            ReferentFormSet = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0)
+            ReferentFormSet = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0, can_delete=True)
             referent_formset = ReferentFormSet(request.POST, request.FILES, instance=project)
 
-            StakeHolderTypeFormset = inlineformset_factory(Project, StakeHolderType, form=StakeHolderTypeForm, extra=0)
+            StakeHolderTypeFormset = inlineformset_factory(Project, StakeHolderType, form=StakeHolderTypeForm, extra=0, can_delete=True)
             stakeholdertype_formset = StakeHolderTypeFormset(request.POST, request.FILES, instance=project)
 
-            LeaderFormset = inlineformset_factory(Project, Leader, form=LeaderForm, extra=0)
+            LeaderFormset = inlineformset_factory(Project, Leader, form=LeaderForm, extra=0, can_delete=True)
             leader_formset = LeaderFormset(request.POST, request.FILES, instance=project)
 
             if referent_formset.is_valid():
@@ -90,11 +93,13 @@ def add(request):
             if leader_formset.is_valid():
                 leader_formset.save()
 
+            return redirect('detail', pk=project.id)
+
 
     form = ProjectForm()
-    referent_formset = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0)
-    stakeholdertype_formset = inlineformset_factory(Project, StakeHolderType, form=StakeHolderTypeForm, extra=0)
-    leader_formset = inlineformset_factory(Project, Leader, form=LeaderForm, extra=0)
+    referent_formset = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0, can_delete=True)
+    stakeholdertype_formset = inlineformset_factory(Project, StakeHolderType, form=StakeHolderTypeForm, extra=0, can_delete=True)
+    leader_formset = inlineformset_factory(Project, Leader, form=LeaderForm, extra=0, can_delete=True)
 
     return render(request, 'add.html', {
         'form': form,
@@ -130,31 +135,33 @@ def update(request, pk):
                 region, created = Region.objects.get_or_create(name=region_name, insee=region_insee)
                 project.region = region
 
-                project.save()
+            project.save()
 
-            ReferentFormSet = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0)
+            ReferentFormSet = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0, can_delete=True)
             referent_formset = ReferentFormSet(request.POST, request.FILES, instance=project)
 
-            StakeHolderTypeFormset = inlineformset_factory(Project, StakeHolderType, form=StakeHolderTypeForm, extra=0)
+            StakeHolderTypeFormset = inlineformset_factory(Project, StakeHolderType, form=StakeHolderTypeForm, extra=0, can_delete=True)
             stakeholdertype_formset = StakeHolderTypeFormset(request.POST, request.FILES, instance=project)
 
-            LeaderFormset = inlineformset_factory(Project, Leader, form=LeaderForm, extra=0)
+            LeaderFormset = inlineformset_factory(Project, Leader, form=LeaderForm, extra=0, can_delete=True)
             leader_formset = LeaderFormset(request.POST, request.FILES, instance=project)
 
-            # if referent_formset.is_valid():
-            #     referent_formset.save()
-            # if stakeholdertype_formset.is_valid():
-            #     stakeholdertype_formset.save()
-            # if leader_formset.is_valid():
-            #     leader_formset.save()
+            if referent_formset.is_valid():
+                referent_formset.save()
+            if stakeholdertype_formset.is_valid():
+                stakeholdertype_formset.save()
+            if leader_formset.is_valid():
+                leader_formset.save()
+
+            return redirect('detail', pk=project.id)
 
     form = ProjectForm(instance=project)
 
-    referent_formset = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0)
+    referent_formset = inlineformset_factory(Project, Referent, form=ReferentForm, extra=0, can_delete=True)
     referent_formset = referent_formset(instance=project)
-    stakeholdertype_formset = inlineformset_factory(Project, StakeHolderType, form=StakeHolderTypeForm, extra=0)
+    stakeholdertype_formset = inlineformset_factory(Project, StakeHolderType, form=StakeHolderTypeForm, extra=0, can_delete=True)
     stakeholdertype_formset = stakeholdertype_formset(instance=project)
-    leader_formset = inlineformset_factory(Project, Leader, form=LeaderForm, extra=0)
+    leader_formset = inlineformset_factory(Project, Leader, form=LeaderForm, extra=0, can_delete=True)
     leader_formset = leader_formset(instance=project)
 
     return render(request, 'update.html', {

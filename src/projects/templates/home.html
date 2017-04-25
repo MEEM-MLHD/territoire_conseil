@@ -29,8 +29,7 @@
     <th>Nom du projet</th>
     <th>Date de début</th>
     <th>Date de fin</th>
-    <th>Région</th>
-    <th>Département</th>
+    <th>Zone géographique</th>
     <th>Mise à jour de la fiche</th>
   </tr>
   {% for project in filter.qs %}
@@ -38,8 +37,7 @@
     <td><a href="{% url 'detail' project.pk %}">{{ project }}</a></td>
     <td>{{ project.begin }}</td>
     <td>{{ project.end }}</td>
-    <td>{{ project.region }}</td>
-    <td>{{ project.department }}</td>
+    <td>{{ project.geographic_zone }}</td>
     <td>{{ project.update }}</td>
   </tr>
   {% endfor %}

@@ -68,6 +68,8 @@
                     {% bootstrap_field form.type %}
                     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                     {% bootstrap_field form.name  %}
+                    <div class="hidden">{{ form.DELETE }}</div>
+                    <button type="button" data-formset-delete-button>Supprimer</button>
                 </div>
             </div>
         </div>
@@ -85,6 +87,8 @@
                     {% bootstrap_field leader_formset.empty_form.type %}
                     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                     {% bootstrap_field leader_formset.empty_form.name %}
+                    <div class="hidden">{{ leader_formset.empty_form.DELETE }}</div>
+                    <button type="button" data-formset-delete-button>Supprimer</button>
                 </div>
             </div>
         </div>
@@ -170,6 +174,8 @@
                     {% bootstrap_field form.function %}
                     {% bootstrap_field form.mail %}
                     {% bootstrap_field form.phone %}
+                    <div class="hidden">{{ form.DELETE }}</div>
+                    <button type="button" data-formset-delete-button>Supprimer</button>
                 </div>
             </div>
         </div>
@@ -191,6 +197,8 @@
                     {% bootstrap_field referent_formset.empty_form.function %}
                     {% bootstrap_field referent_formset.empty_form.mail %}
                     {% bootstrap_field referent_formset.empty_form.phone %}
+                    <div class="hidden">{{ referent_formset.empty_form.DELETE }}</div>
+                    <button type="button" data-formset-delete-button>Supprimer</button>
                 </div>
             </div>
         </div>
@@ -229,6 +237,8 @@
                     {% bootstrap_field form.stakeholder %}
                     {% bootstrap_field form.detail %}
                     {% bootstrap_field form.manager %}
+                    <div class="hidden">{{ form.DELETE }}</div>
+                    <button type="button" data-formset-delete-button>Supprimer</button>
                 </div>
             </div>
         </div>
@@ -245,6 +255,8 @@
                 <div class="row well">
                     {% bootstrap_field stakeholdertype_formset.empty_form.stakeholder %}
                     {% bootstrap_field stakeholdertype_formset.empty_form.detail %}
+                    <div class="hidden">{{ stakeholdertype_formset.empty_form.DELETE }}</div>
+                    <button type="button" data-formset-delete-button>Supprimer</button>
                 </div>
             </div>
         </div>

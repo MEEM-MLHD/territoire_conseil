@@ -15,6 +15,8 @@ class ProjectForm(forms.ModelForm):
                'interventions': forms.CheckboxSelectMultiple,
                'themes': forms.CheckboxSelectMultiple,
                'triggers': forms.CheckboxSelectMultiple,
+               'description': forms.Textarea({'rows': 5}),
+               'structure_challenges': forms.Textarea({'rows': 5})
                 }
 
 
