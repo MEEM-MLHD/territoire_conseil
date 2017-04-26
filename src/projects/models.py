@@ -115,8 +115,8 @@ class Project(models.Model):
     name = models.CharField("Nom du projet", max_length=255)
 
     description = models.TextField("Description du projet", blank=True, help_text="5 lignes maximum")
-    begin = models.DateField(u"Date de début de projet", blank=True, null=True)
-    end = models.DateField(u"Date prévisionnelle de fin de projet", blank=True, null=True)
+    begin = models.DateField(u"Date de début de projet", blank=True, null=True, help_text="JJ/MM/AAAA")
+    end = models.DateField(u"Date prévisionnelle de fin de projet", blank=True, null=True, help_text="JJ/MM/AAAA")
     image = models.ImageField(upload_to="image", null=True, blank=True)
     url = models.URLField("Pour en savoir plus", blank=True, help_text="Lien URL")
 
@@ -207,13 +207,13 @@ class Leader(models.Model):
 
 
 class Referent(models.Model):
-    firstname = models.CharField(u"Prénom", max_length=255, blank=True)
-    lastname = models.CharField(u"Nom", max_length=255)
-    function = models.CharField(u"Fonction", max_length=255, blank=True)
-    structure = models.ForeignKey(Structure, verbose_name="Structure")
-    service = models.CharField(u"Service", max_length=255, blank=True, help_text=u"Eviter les sigles")
+    # firstname = models.CharField(u"Prénom", max_length=255, blank=True)
+    # lastname = models.CharField(u"Nom", max_length=255)
+    # function = models.CharField(u"Fonction", max_length=255, blank=True)
+    # structure = models.ForeignKey(Structure, verbose_name="Structure")
+    # service = models.CharField(u"Service", max_length=255, blank=True, help_text=u"Eviter les sigles")
     mail = models.CharField(u"Mail", max_length=255)
-    phone = models.CharField(u"Téléphone", max_length=255, blank=True)
+    # phone = models.CharField(u"Téléphone", max_length=255, blank=True)
     project = models.ForeignKey(Project, null=True)
 
 

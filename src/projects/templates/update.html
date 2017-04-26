@@ -170,13 +170,15 @@
             <div class="container">
                 <div class="row well">
                     {{ form.id }}
+                    {% comment %}
                     {% bootstrap_field form.firstname %}
                     {% bootstrap_field form.lastname %}
                     {% bootstrap_field form.structure %}
                     {% bootstrap_field form.service %}
                     {% bootstrap_field form.function %}
-                    {% bootstrap_field form.mail %}
                     {% bootstrap_field form.phone %}
+                    {% endcomment %}
+                    {% bootstrap_field form.mail %}
                     <div class="hidden">{{ form.DELETE }}</div>
                     <button type="button" data-formset-delete-button>Supprimer</button>
                 </div>
@@ -194,13 +196,15 @@
             <div class="container">
                 <div class="row well">
                     {{ referent_formset.empty_form.id }}
+                    {% comment %}
                     {% bootstrap_field referent_formset.empty_form.firstname %}
                     {% bootstrap_field referent_formset.empty_form.lastname %}
                     {% bootstrap_field referent_formset.empty_form.structure %}
                     {% bootstrap_field referent_formset.empty_form.service %}
                     {% bootstrap_field referent_formset.empty_form.function %}
-                    {% bootstrap_field referent_formset.empty_form.mail %}
                     {% bootstrap_field referent_formset.empty_form.phone %}
+                    {% endcomment %}
+                    {% bootstrap_field referent_formset.empty_form.mail %}
                     <div class="hidden">{{ referent_formset.empty_form.DELETE }}</div>
                     <button type="button" data-formset-delete-button>Supprimer</button>
                 </div>
