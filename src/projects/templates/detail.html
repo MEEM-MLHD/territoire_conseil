@@ -94,7 +94,7 @@ shapefile : {{ project.shapefile }}<br />
 {% endif %}
 
 {% if project.referent_set.all %}
-<h3>Personnes en charge du dossier</h3>
+<h3>Référent(s) Etat pour l'accompagnement du projet</h3>
 <ul>
 {% for referent in project.referent_set.all %}
 <li><a href="mailto:{{ referent.mail }}">{{ referent.mail }}</a></li>
