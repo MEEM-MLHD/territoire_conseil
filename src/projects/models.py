@@ -187,6 +187,11 @@ class Project(models.Model):
         else:
             return 'autre'
 
+    @property
+    def is_funding_european(self):
+        if self.funding_european != '':
+            return True
+        return False
 
     class Meta:
         verbose_name = "Projet"

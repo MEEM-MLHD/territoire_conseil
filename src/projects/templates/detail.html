@@ -129,6 +129,18 @@ shapefile : {{ project.shapefile }}<br />
 {% endif %}
 {% endif %}
 
+
+{% if project.funding_european or project.funding_national or project.funding_regional or project.funding_departmental or project.funding_other %}
+  <h3>Financement</h3>
+  <ul>
+  {% if project.funding_european %}<li>Financement européen : {{ project.funding_european }}</li>{% endif %}
+  {% if project.funding_national %}<li>Financement national : {{ project.funding_national }}</li>{% endif %}
+  {% if project.funding_regional %}<li>Financement régional : {{ project.funding_regional }}</li>{% endif %}
+  {% if project.funding_departmental %}<li>Financement départemental : {{ project.funding_departmental }}</li>{% endif %}
+  {% if project.funding_other %}<li>Financement : {{ project.funding_other }}</li>{% endif %}
+  </ul>
+{% endif %}
+
 {% if project.triggers.all or project.triggers_others %}
 <h3>Eléments déclencheurs</h3>
 <ul>
