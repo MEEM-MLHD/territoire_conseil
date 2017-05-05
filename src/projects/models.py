@@ -118,7 +118,7 @@ class Project(models.Model):
     begin = models.DateField(u"Date de début de projet", blank=True, null=True, help_text="JJ/MM/AAAA")
     end = models.DateField(u"Date prévisionnelle de fin de projet", blank=True, null=True, help_text="JJ/MM/AAAA")
     image = models.ImageField(upload_to="image", null=True, blank=True)
-    url = models.URLField("Pour en savoir plus", blank=True, help_text="Lien URL")
+    url = models.URLField("Pour en savoir plus", blank=True, help_text=u"Lien URL complet, commençant par https:// ou http://")
 
     region = models.ForeignKey(Region, verbose_name="Région", blank=True, null=True)
     department = models.ForeignKey(Department, verbose_name="Département", blank=True, null=True)
